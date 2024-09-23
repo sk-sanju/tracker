@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <title>Track Mobile Number</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-image: url('/static/map.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: #141139;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.418);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #0f354f;
+            color: #fff;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #03243a;
+        }
+
+        .info {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .info h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            color: #0f354f;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .info li {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .error {
+            color: red;
+            font-size: 16px;
+        }
+        #find{
+            padding-right: 20%;
+            font-size: 50px;
+            color: #ffffff;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TRACK MOBILE NUMBER</h1>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <label for="phone_number">Enter Mobile Number (with country code)</label>
+            <input type="text" id="phone_number" name="phone_number" placeholder="+123456789" required>
+            <button type="submit">Track</button>
+        </form>
+
+        {% if phone_info %}
+            <div class="info">
+                <h2>Phone Number Information</h2>
+                <ul>
+                    <li><strong>Country:</strong> {{ phone_info.Country }}</li>
+                    <li><strong>Location:</strong> {{ phone_info.Location }}</li>
+                    <li><strong>Carrier:</strong> {{ phone_info.Carrier }}</li>
+                    <li><strong>Line Type:</strong> {{ phone_info.Line }}</li>
+                </ul>
+            </div>
+        {% elif error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+    <div class="find">
+        <h1 id="find">Find Who is That ?</h1>
+    </div>
+</body>
+</html>
